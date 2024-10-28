@@ -26,26 +26,34 @@ public class DialogueOpen : MonoBehaviour
     public void createClue()
     {
         clue = Random.Range(0, 9);
+        searchDialouge();
     }
 
+    public void searchDialouge()
+    {
+        dialogue = "Hi! Can you help me find my " +
+        collectibles[clue] + "?";
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!begin && pHolding.Verify())
         {
-            checkClue();
+            checkClue();    
         }
         greeting.Play(0);
+        interfaceManager.GetComponent<InterfaceManager>().ShowBox(dialogue, clue);
     }
 
     private void checkClue()
     {
         if (pHolding.holdValue == clue)
         {
+            dialogue = "You found my " + collectibles[clue] + "! Yippie!";
             end = true;
         }
         else
         {
-
+            dialogue = "No, that's not my " + collectibles[clue] + ".";
         }
     }
 
